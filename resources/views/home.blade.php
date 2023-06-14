@@ -20,7 +20,9 @@
                     <p style="background: #f7f5f5; font-weight: bold; padding: 15px; border-left:8px solid #ff0080; border-top-left-radius:8px; border-bottom-left-radius:8px;">Caja de colores HTML y CSS con borde redondeado a la izquierda</p>
                     <p style="background: #f7f5f5; font-weight: bold; padding: 15px; border-right:5px solid #ff0080;">Caja de colores HTML y CSS con borde a la izquierda</p> --}}
                     
-                    
+                    <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 selection:bg-red-500 selection:text-white">
+                     
+                
                     <div class='contenedor'>
                         <div class="contenido">
                            <div class="box-blue inner">

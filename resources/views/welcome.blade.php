@@ -19,607 +19,447 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="{{asset('clinic/lib/animate/animate.min.css')}}" rel="stylesheet">
-    <link href="{{asset('clinic/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('clinic/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{asset('clinic/css/bootstrap.min.css')}}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="{{asset('clinic/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('clinic/vendors/owl-carousel/css/owl.carousel.min.css')}}">
+    <link rel="stylesheet" href="{{asset('clinic/vendors/owl-carousel/css/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="{{asset('clinic/vendors/mdi/css/materialdesignicons.min.css')}}">
+    <link rel="stylesheet" href="{{asset('clinic/vendors/aos/css/aos.css')}}">
+    <link rel="stylesheet" href="{{asset('clinic/css/style.min.css')}}">
 </head>
 
 <body>
-    @if(Auth::check())
-    <li class="nav-item">
-       <a class="nav-link" href="{{ url('/home') }}">Inicio</a>
-   </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('alumnos/index') }}">Alumnos</a>
-    </li>
-@endif
-    <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 selection:bg-red-500 selection:text-white">
-        @if (Route::has('login'))
-            <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+   
+   
+            <!--AGREGADO DESDE UNA PLANTILLA-->
+            <header id="header-section">
+                <nav class="navbar navbar-expand-lg pl-3 pl-sm-0" id="navbar">
+                <div class="container">
+                  <div class="navbar-brand-wrapper d-flex w-100">
+                    <img src="{{asset('clinic/images/LogoCambiado2023.png')}}" alt="" width="160px">
+                    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="mdi mdi-menu navbar-toggler-icon"></span>
+                    </button> 
+                  </div>
+                  <div class="collapse navbar-collapse navbar-menu-wrapper" id="navbarSupportedContent">
+                    <ul class="navbar-nav align-items-lg-center align-items-start ml-auto">
+                      <li class="d-flex align-items-center justify-content-between pl-4 pl-lg-0">
+                        <div class="navbar-collapse-logo">
+                          <img src="{{asset('clinic/images/Group2.svg')}}" alt="">
+                        </div>
+                        <button class="navbar-toggler close-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="mdi mdi-close navbar-toggler-icon pl-5"></span>
+                        </button>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#header-section">Inicio <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#features-section">Nosotros</a>
+                      </li>
+                      {{-- <li class="nav-item">
+                        <a class="nav-link" href="#digital-marketing-section">Blog</a>  
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#feedback-section">Testimonials</a>
+                      </li> --}}
+                      <li class="nav-item btn-contact-us pl-4 pl-lg-0">
+                        @if(Auth::check())
+                        <a class="btn btn-info" href="{{route('home')}}">Entrar</a>
+                            
+                         @endif
+                    {{-- <a class="btn btn-info"  href="{{route('login')}}">Iniciar Sesión</a> --}}
+                    @if (Route::has('login'))
+            {{-- <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10"> --}}
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Inicio</a>
+                <a class="btn btn-danger" href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                              document.getElementById('logout-form').submit();">
+                 {{ __('Cerrar Sesión') }}
+             </a>
+
+             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                 @csrf
+             </form>
                 @else
-                    <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Iniciar Sesión</a>
+                    <a href="{{ route('login') }}" class="btn btn-info font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Iniciar Sesión</a>
 
                      @if (Route::has('register'))
                         {{-- <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Registrarse</a> --}}
                     @endif 
                 @endauth
-            </div>
+            {{-- </div> --}}
         @endif
-
-    <!-- Spinner Start -->
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-    <!-- Spinner End -->
-
-
-    <!-- Topbar Start -->
-    <div class="container-fluid bg-light p-0 wow fadeIn" data-wow-delay="0.1s">
-        <div class="row gx-0 d-none d-lg-flex">
-            <div class="col-lg-7 px-5 text-start">
-                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
-                    <small class="fa fa-map-marker-alt text-primary me-2"></small>
-                    <small>123 Street, New York, USA</small>
+                    
+                      </li>
+                    </ul>
+                  </div>
+                </div> 
+                </nav>   
+              </header>
+              <div class="banner" >
+                <div class="container">
+                  <h1 class="font-weight-semibold">MedicalCare <br>Consultorio Particular.</h1>
+                  <h6 class="font-weight-normal text-muted pb-3">Consultas médicas a los teléfonos: (2302)-123456.</h6>
+                  <div>
+                    {{-- <button class="btn btn-opacity-light mr-1">Get started</button>
+                    <button class="btn btn-opacity-success ml-1">Learn more</button> --}}
+                  </div>
+                  <img src="{{asset('clinic/images/Group171.svg')}}" alt="" class="img-fluid">
                 </div>
-                <div class="h-100 d-inline-flex align-items-center py-3">
-                    <small class="far fa-clock text-primary me-2"></small>
-                    <small>Mon - Fri : 09.00 AM - 09.00 PM</small>
-                </div>
-            </div>
-            <div class="col-lg-5 px-5 text-end">
-                <div class="h-100 d-inline-flex align-items-center py-3 me-4">
-                    <small class="fa fa-phone-alt text-primary me-2"></small>
-                    <small>+012 345 6789</small>
-                </div>
-                <div class="h-100 d-inline-flex align-items-center">
-                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i class="fab fa-twitter"></i></a>
-                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-1" href=""><i class="fab fa-linkedin-in"></i></a>
-                    <a class="btn btn-sm-square rounded-circle bg-white text-primary me-0" href=""><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
-
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0 wow fadeIn" data-wow-delay="0.1s">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-            <h1 class="m-0 text-primary"><i class="far fa-hospital me-3"></i>Klinik</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
-                <a href="service.html" class="nav-item nav-link">Service</a>
-                <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                    <div class="dropdown-menu rounded-0 rounded-bottom m-0">
-                        <a href="feature.html" class="dropdown-item">Feature</a>
-                        <a href="team.html" class="dropdown-item">Our Doctor</a>
-                        <a href="appointment.html" class="dropdown-item">Appointment</a>
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a href="404.html" class="dropdown-item">404 Page</a>
+              </div>
+              <div class="content-wrapper">
+                <div class="container">
+                  <section class="features-overview" id="features-section" >
+                    <div class="content-header">
+                      <h2>How does it works</h2>
+                      <h6 class="section-subtitle text-muted">One theme that serves as an easy-to-use operational toolkit<br>that meets customer's needs.</h6>
                     </div>
-                </div>
-                <a href="contact.html" class="nav-item nav-link">Contact</a>
-            </div>
-            <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Appointment<i class="fa fa-arrow-right ms-3"></i></a>
-        </div>
-    </nav>
-    <!-- Navbar End -->
-
-
-    <!-- Header Start -->
-    <div class="container-fluid header bg-primary p-0 mb-5">
-        <div class="row g-0 align-items-center flex-column-reverse flex-lg-row">
-            <div class="col-lg-6 p-5 wow fadeIn" data-wow-delay="0.1s">
-                <h1 class="display-4 text-white mb-5">Good Health Is The Root Of All Heppiness</h1>
-                <div class="row g-4">
-                    <div class="col-sm-4">
-                        <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">123</h2>
-                            <p class="text-light mb-0">Expert Doctors</p>
+                    <div class="d-md-flex justify-content-between">
+                      <div class="grid-margin d-flex justify-content-start">
+                        <div class="features-width">
+                          <img src="{{asset('clinic/images/Group12.svg')}}" alt="" class="img-icons">
+                          <h5 class="py-3">Sector<br>Cardiología</h5>
+                          <p class="text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                          <a href="#"><p class="readmore-link">Leer más</p></a>  
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">1234</h2>
-                            <p class="text-light mb-0">Medical Stuff</p>
+                      </div>
+                      <div class="grid-margin d-flex justify-content-center">
+                        <div class="features-width">
+                          <img src="{{asset('clinic/images/Group7.svg')}}" alt="" class="img-icons">
+                          <h5 class="py-3">Traumatología<br>y ortopedia</h5>
+                          <p class="text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                          <a href="#"><p class="readmore-link">Leer más</p></a>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="border-start border-light ps-4">
-                            <h2 class="text-white mb-1" data-toggle="counter-up">12345</h2>
-                            <p class="text-light mb-0">Total Patients</p>
+                      </div>
+                      <div class="grid-margin d-flex justify-content-end">
+                        <div class="features-width">
+                          <img src="{{asset('clinic/images/Group5.svg')}}" alt="" class="img-icons">
+                          <h5 class="py-3">Optica<br>y Oftalmología</h5>
+                          <p class="text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                          <a href="#"><p class="readmore-link">Leer más</p></a>
                         </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                <div class="owl-carousel header-carousel">
-                    <div class="owl-carousel-item position-relative">
-                        <img class="img-fluid" src="img/carousel-1.jpg" alt="">
-                        <div class="owl-carousel-text">
-                            <h1 class="display-1 text-white mb-0">Cardiology</h1>
+                  </section>     
+                  <section class="digital-marketing-service" id="digital-marketing-section">
+                    <div class="row align-items-center">
+                      <div class="col-12 col-lg-7 grid-margin grid-margin-lg-0" data-aos="fade-right">
+                        <h3 class="m-0">Ofrecemos un amplio servicio en atención al paciente<br>Sumate a nuestro centro de salud.!</h3>
+                        <div class="col-lg-7 col-xl-6 p-0">
+                          <p class="py-4 m-0 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                          <p class="font-weight-medium text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer</p>
+                        </div>    
+                      </div>
+                      <div class="col-12 col-lg-5 p-0 img-digital grid-margin grid-margin-lg-0" data-aos="fade-left">
+                        <img src="{{asset('clinic/images/Group1.png')}}" alt="" class="img-fluid">
+                      </div>
+                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-12 col-lg-7 text-center flex-item grid-margin" data-aos="fade-right">
+                        <img src="{{asset('clinic/images/Group2.png')}}" alt="" class="img-fluid">
+                      </div>
+                      <div class="col-12 col-lg-5 flex-item grid-margin" data-aos="fade-left">
+                        <h3 class="m-0">Somos líderes en distintas<br>áreas específicas para la atención del paciente.</h3>
+                        <div class="col-lg-9 col-xl-8 p-0">
+                          <p class="py-4 m-0 text-muted">Power-packed with impressive features and well-optimized, this template is designed to provide the best performance in all circumstances.</p>
+                          <p class="pb-2 font-weight-medium text-muted">Its smart features make it a powerful stand-alone website building tool.</p>
                         </div>
+                        <button class="btn btn-info">Readmore</button>
+                      </div>
                     </div>
-                    <div class="owl-carousel-item position-relative">
-                        <img class="img-fluid" src="img/carousel-2.jpg" alt="">
-                        <div class="owl-carousel-text">
-                            <h1 class="display-1 text-white mb-0">Neurology</h1>
-                        </div>
-                    </div>
-                    <div class="owl-carousel-item position-relative">
-                        <img class="img-fluid" src="img/carousel-3.jpg" alt="">
-                        <div class="owl-carousel-text">
-                            <h1 class="display-1 text-white mb-0">Pulmonary</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Header End -->
-
-
-    <!-- About Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="d-flex flex-column">
-                        <img class="img-fluid rounded w-75 align-self-end" src="img/about-1.jpg" alt="">
-                        <img class="img-fluid rounded w-50 bg-white pt-3 pe-3" src="img/about-2.jpg" alt="" style="margin-top: -25%;">
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">About Us</p>
-                    <h1 class="mb-4">Why You Should Trust Us? Get Know About Us!</h1>
-                    <p>Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <p class="mb-4">Stet no et lorem dolor et diam, amet duo ut dolore vero eos. No stet est diam rebum amet diam ipsum. Clita clita labore, dolor duo nonumy clita sit at, sed sit sanctus dolor eos.</p>
-                    <p><i class="far fa-check-circle text-primary me-3"></i>Quality health care</p>
-                    <p><i class="far fa-check-circle text-primary me-3"></i>Only Qualified Doctors</p>
-                    <p><i class="far fa-check-circle text-primary me-3"></i>Medical Research Professionals</p>
-                    <a class="btn btn-primary rounded-pill py-3 px-5 mt-3" href="">Read More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- About End -->
-
-
-    <!-- Service Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="d-inline-block border rounded-pill py-1 px-4">Services</p>
-                <h1>Health Care Solutions</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-heartbeat text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Cardiology</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-x-ray text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Pulmonary</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-brain text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Neurology</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-wheelchair text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Orthopedics</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-tooth text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Dental Surgery</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-5">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-white rounded-circle mb-4" style="width: 65px; height: 65px;">
-                            <i class="fa fa-vials text-primary fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Laboratory</h4>
-                        <p class="mb-4">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet.</p>
-                        <a class="btn" href=""><i class="fa fa-plus text-primary me-3"></i>Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Service End -->
-
-
-    <!-- Feature Start -->
-    <div class="container-fluid bg-primary overflow-hidden my-5 px-lg-0">
-        <div class="container feature px-lg-0">
-            <div class="row g-0 mx-lg-0">
-                <div class="col-lg-6 feature-text py-5 wow fadeIn" data-wow-delay="0.1s">
-                    <div class="p-lg-5 ps-lg-0">
-                        <p class="d-inline-block border rounded-pill text-light py-1 px-4">Features</p>
-                        <h1 class="text-white mb-4">Why Choose Us</h1>
-                        <p class="text-white mb-4 pb-2">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo erat amet</p>
-                        <div class="row g-4">
-                            <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
-                                        <i class="fa fa-user-md text-primary"></i>
-                                    </div>
-                                    <div class="ms-4">
-                                        <p class="text-white mb-2">Experience</p>
-                                        <h5 class="text-white mb-0">Doctors</h5>
-                                    </div>
+                  </section>     
+                  {{-- <section class="case-studies" id="case-studies-section">
+                    <div class="row grid-margin">
+                      <div class="col-12 text-center pb-5">
+                        <h2>Our case studies</h2>
+                        <h6 class="section-subtitle text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum.</h6>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0" data-aos="zoom-in">
+                        <div class="card color-cards">
+                          <div class="card-body p-0">
+                            <div class="bg-primary text-center card-contents">
+                              <div class="card-image">
+                                <img src="{{asset('clinic/images/Group95.svg')}}" class="case-studies-card-img" alt="">
+                              </div>  
+                              <div class="card-desc-box d-flex align-items-center justify-content-around">
+                                <div>
+                                  <h6 class="text-white pb-2 px-3">Know more about Online marketing</h6>
+                                  <button class="btn btn-white">Read More</button>
                                 </div>
+                              </div>
+                            </div>   
+                            <div class="card-details text-center pt-4">
+                                <h6 class="m-0 pb-1">Online Marketing</h6>
+                                <p>Seo, Marketing</p>
                             </div>
-                            <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
-                                        <i class="fa fa-check text-primary"></i>
-                                    </div>
-                                    <div class="ms-4">
-                                        <p class="text-white mb-2">Quality</p>
-                                        <h5 class="text-white mb-0">Services</h5>
-                                    </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="card color-cards">
+                          <div class="card-body p-0">
+                            <div class="bg-warning text-center card-contents">
+                              <div class="card-image">
+                                  <img src="{{asset('clinic/images/Group108.svg')}}" class="case-studies-card-img" alt="">
+                              </div>  
+                              <div class="card-desc-box d-flex align-items-center justify-content-around">
+                                <div>
+                                  <h6 class="text-white pb-2 px-3">Know more about Web Development</h6>
+                                  <button class="btn btn-white">Read More</button>
                                 </div>
+                              </div>
+                            </div>   
+                            <div class="card-details text-center pt-4">
+                                <h6 class="m-0 pb-1">Web Development</h6>
+                                <p>Developing, Designing</p>
                             </div>
-                            <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
-                                        <i class="fa fa-comment-medical text-primary"></i>
-                                    </div>
-                                    <div class="ms-4">
-                                        <p class="text-white mb-2">Positive</p>
-                                        <h5 class="text-white mb-0">Consultation</h5>
-                                    </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 stretch-card mb-3 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+                        <div class="card color-cards">
+                          <div class="card-body p-0">
+                            <div class="bg-violet text-center card-contents">
+                              <div class="card-image">
+                                  <img src="{{asset('clinic/images/Group126.svg')}}" class="case-studies-card-img" alt="">
+                              </div>  
+                              <div class="card-desc-box d-flex align-items-center justify-content-around">
+                                <div>
+                                  <h6 class="text-white pb-2 px-3">Know more about Web Designing</h6>
+                                  <button class="btn btn-white">Read More</button>
                                 </div>
+                              </div>
+                            </div>   
+                            <div class="card-details text-center pt-4">
+                                <h6 class="m-0 pb-1">Web Designing</h6>
+                                <p>Designing, Developing</p>
                             </div>
-                            <div class="col-6">
-                                <div class="d-flex align-items-center">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-light" style="width: 55px; height: 55px;">
-                                        <i class="fa fa-headphones text-primary"></i>
-                                    </div>
-                                    <div class="ms-4">
-                                        <p class="text-white mb-2">24 Hours</p>
-                                        <h5 class="text-white mb-0">Support</h5>
-                                    </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 stretch-card" data-aos="zoom-in" data-aos-delay="600">
+                        <div class="card color-cards">
+                          <div class="card-body p-0">
+                            <div class="bg-success text-center card-contents">
+                              <div class="card-image">
+                                  <img src="{{asset('clinic/images/Group115.svg')}}" class="case-studies-card-img" alt="">
+                              </div>  
+                              <div class="card-desc-box d-flex align-items-center justify-content-around">
+                                <div>
+                                  <h6 class="text-white pb-2 px-3">Know more about Software Development</h6>
+                                  <button class="btn btn-white">Read More</button>
                                 </div>
+                              </div>
+                            </div>   
+                            <div class="card-details text-center pt-4">
+                                <h6 class="m-0 pb-1">Software Development</h6>
+                                <p>Developing, Designing</p>
                             </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
-                </div>
-                <div class="col-lg-6 pe-lg-0 wow fadeIn" data-wow-delay="0.5s" style="min-height: 400px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute img-fluid w-100 h-100" src="img/feature.jpg" style="object-fit: cover;" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Feature End -->
-
-
-    <!-- Team Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="d-inline-block border rounded-pill py-1 px-4">Doctors</p>
-                <h1>Our Experience Doctors</h1>
-            </div>
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="team-item position-relative rounded overflow-hidden">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-1.jpg" alt="">
-                        </div>
-                        <div class="team-text bg-light text-center p-4">
-                            <h5>Doctor Name</h5>
-                            <p class="text-primary">Department</p>
-                            <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                  </section>      --}}
+                  {{-- <section class="customer-feedback" id="feedback-section">
+                    <div class="row">
+                      <div class="col-12 text-center pb-5">
+                        <h2>What our customers have to say</h2>
+                        <h6 class="section-subtitle text-muted m-0">Lorem ipsum dolor sit amet, tincidunt vestibulum.</h6>
+                      </div>
+                      <div class="owl-carousel owl-theme grid-margin">
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face2.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Tony Martinez</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="team-item position-relative rounded overflow-hidden">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-2.jpg" alt="">
-                        </div>
-                        <div class="team-text bg-light text-center p-4">
-                            <h5>Doctor Name</h5>
-                            <p class="text-primary">Department</p>
-                            <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face3.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Sophia Armstrong</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="team-item position-relative rounded overflow-hidden">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-3.jpg" alt="">
-                        </div>
-                        <div class="team-text bg-light text-center p-4">
-                            <h5>Doctor Name</h5>
-                            <p class="text-primary">Department</p>
-                            <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face20.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Cody Lambert</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="team-item position-relative rounded overflow-hidden">
-                        <div class="overflow-hidden">
-                            <img class="img-fluid" src="img/team-4.jpg" alt="">
-                        </div>
-                        <div class="team-text bg-light text-center p-4">
-                            <h5>Doctor Name</h5>
-                            <p class="text-primary">Department</p>
-                            <div class="team-social text-center">
-                                <a class="btn btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-square" href=""><i class="fab fa-instagram"></i></a>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face15.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Cody Lambert</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
                             </div>
-                        </div>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face16.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Cody Lambert</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face1.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Tony Martinez</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face2.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Tony Martinez</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face3.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Sophia Armstrong</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="card customer-cards">
+                            <div class="card-body">
+                              <div class="text-center">
+                                <img src="{{asset('clinic/images/face20.jpg')}}" width="89" height="89" alt="" class="img-customer">
+                                <p class="m-0 py-3 text-muted">Lorem ipsum dolor sit amet, tincidunt vestibulum. Fusce egeabus consectetuer turpis, suspendisse.</p>
+                                <div class="content-divider m-auto"></div>
+                                <h6 class="card-title pt-3">Cody Lambert</h6>
+                                <h6 class="customer-designation text-muted m-0">Marketing Manager</h6>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Team End -->
-
-
-    <!-- Appointment Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <p class="d-inline-block border rounded-pill py-1 px-4">Appointment</p>
-                    <h1 class="mb-4">Make An Appointment To Visit Our Doctor</h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <div class="bg-light rounded d-flex align-items-center p-5 mb-4">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-phone-alt text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Call Us Now</p>
-                            <h5 class="mb-0">+012 345 6789</h5>
-                        </div>
+                  </section> --}}
+                  {{-- <section class="contact-us" id="contact-section">
+                    <div class="contact-us-bgimage grid-margin" >
+                      <div class="pb-4">
+                        <h4 class="px-3 px-md-0 m-0" data-aos="fade-down">Do you have any projects?</h4>
+                        <h4 class="pt-1" data-aos="fade-down">Contact us</h4>
+                      </div>
+                      <div data-aos="fade-up">
+                        <button class="btn btn-rounded btn-outline-danger">Contact us</button>
+                      </div>          
                     </div>
-                    <div class="bg-light rounded d-flex align-items-center p-5">
-                        <div class="d-flex flex-shrink-0 align-items-center justify-content-center rounded-circle bg-white" style="width: 55px; height: 55px;">
-                            <i class="fa fa-envelope-open text-primary"></i>
-                        </div>
-                        <div class="ms-4">
-                            <p class="mb-2">Mail Us Now</p>
-                            <h5 class="mb-0">info@example.com</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="bg-light rounded h-100 d-flex align-items-center p-5">
+                  </section> --}}
+                  {{-- <section class="contact-details" id="contact-details-section">
+                    <div class="row text-center text-md-left">
+                      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+                        <img src="{{asset('clinic/images/Group2.svg')}}" alt="" class="pb-2">
+                        <div class="pt-2">
+                          <p class="text-muted m-0">mikayla_beer@feil.name</p>
+                          <p class="text-muted m-0">906-179-8309</p>
+                        </div>         
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+                        <h5 class="pb-2">Get in Touch</h5>
+                        <p class="text-muted">Don’t miss any updates of our new templates and extensions.!</p>
                         <form>
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Name" style="height: 55px;">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control border-0" placeholder="Your Email" style="height: 55px;">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" style="height: 55px;">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <select class="form-select border-0" style="height: 55px;">
-                                        <option selected>Choose Doctor</option>
-                                        <option value="1">Doctor 1</option>
-                                        <option value="2">Doctor 2</option>
-                                        <option value="3">Doctor 3</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="date" id="date" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" data-target="#date" data-toggle="datetimepicker" style="height: 55px;">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <div class="time" id="time" data-target-input="nearest">
-                                        <input type="text"
-                                            class="form-control border-0 datetimepicker-input"
-                                            placeholder="Choose Date" data-target="#time" data-toggle="datetimepicker" style="height: 55px;">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control border-0" rows="5" placeholder="Describe your problem"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Book Appointment</button>
-                                </div>
-                            </div>
+                          <input type="text" class="form-control" id="Email" placeholder="Email id">
                         </form>
+                        <div class="pt-3">
+                          <button class="btn btn-dark">Subscribe</button>
+                        </div>   
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+                        <h5 class="pb-2">Our Guidelines</h5>
+                        <a href="#"><p class="m-0 pb-2">Terms</p></a>   
+                        <a href="#" ><p class="m-0 pt-1 pb-2">Privacy policy</p></a> 
+                        <a href="#"><p class="m-0 pt-1 pb-2">Cookie Policy</p></a> 
+                        <a href="#"><p class="m-0 pt-1">Discover</p></a> 
+                      </div>
+                      <div class="col-12 col-md-6 col-lg-3 grid-margin">
+                          <h5 class="pb-2">Our address</h5>
+                          <p class="text-muted">518 Schmeler Neck<br>Bartlett. Illinois</p>
+                          <div class="d-flex justify-content-center justify-content-md-start">
+                            <a href="#"><span class="mdi mdi-facebook"></span></a>
+                            <a href="#"><span class="mdi mdi-twitter"></span></a>
+                            <a href="#"><span class="mdi mdi-instagram"></span></a>
+                            <a href="#"><span class="mdi mdi-linkedin"></span></a>
+                          </div>
+                      </div>
+                    </div>  
+                  </section> --}}
+                  <footer class="border-top">
+                    <p class="text-center text-muted pt-4">Copyright © 2023<a href="https://www.bootstrapdash.com/" class="px-1">MedicalCare</a>Todos los derechos reservados.</p>
+            
+                    <p class="text-center text-muted pt-2">Distributed By: <a href="#" class="px-1" target="_blank">Julio Andres</a></p>
+                  </footer>
+                  <!-- Modal for Contact - us Button -->
+                  {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title" id="exampleModalLabel">Contácto</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form>
+                            <div class="form-group">
+                              <label for="Name">Name</label>
+                              <input type="text" class="form-control" id="Name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                              <label for="Email">Email</label>
+                              <input type="email" class="form-control" id="Email-1" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                              <label for="Message">Message</label>
+                              <textarea class="form-control" id="Message" placeholder="Enter your Message"></textarea>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-success">Submit</button>
+                        </div>
+                      </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Appointment End -->
-
-
-    <!-- Testimonial Start -->
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                <p class="d-inline-block border rounded-pill py-1 px-4">Testimonial</p>
-                <h1>What Say Our Patients!</h1>
-            </div>
-            <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-1.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                        <h5 class="mb-1">Patient Name</h5>
-                        <span class="fst-italic">Profession</span>
-                    </div>
-                </div>
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-2.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                        <h5 class="mb-1">Patient Name</h5>
-                        <span class="fst-italic">Profession</span>
-                    </div>
-                </div>
-                <div class="testimonial-item text-center">
-                    <img class="img-fluid bg-light rounded-circle p-2 mx-auto mb-4" src="img/testimonial-3.jpg" style="width: 100px; height: 100px;">
-                    <div class="testimonial-text rounded text-center p-4">
-                        <p>Clita clita tempor justo dolor ipsum amet kasd amet duo justo duo duo labore sed sed. Magna ut diam sit et amet stet eos sed clita erat magna elitr erat sit sit erat at rebum justo sea clita.</p>
-                        <h5 class="mb-1">Patient Name</h5>
-                        <span class="fst-italic">Profession</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
-
-
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-light footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Address</h5>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-social rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Services</h5>
-                    <a class="btn btn-link" href="">Cardiology</a>
-                    <a class="btn btn-link" href="">Pulmonary</a>
-                    <a class="btn btn-link" href="">Neurology</a>
-                    <a class="btn btn-link" href="">Orthopedics</a>
-                    <a class="btn btn-link" href="">Laboratory</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Quick Links</h5>
-                    <a class="btn btn-link" href="">About Us</a>
-                    <a class="btn btn-link" href="">Contact Us</a>
-                    <a class="btn btn-link" href="">Our Services</a>
-                    <a class="btn btn-link" href="">Terms & Condition</a>
-                    <a class="btn btn-link" href="">Support</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h5 class="text-light mb-4">Newsletter</h5>
-                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#">Your Site Name</a>, All Right Reserved.
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                        </br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer End -->
-
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{asset('clinic/lib/wow/wow.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/easing/easing.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/waypoints/waypoints.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/counterup/counterup.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/owlcarousel/owl.carousel.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/tempusdominus/js/moment.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
-    <script src="{{asset('clinic/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-
-    <!-- Template Javascript -->
-    <script src="{{asset('clinic/js/main.js')}}"></script>
+                  </div>
+                </div> 
+              </div> --}}
+              <script src="{{asset('clinic/vendors/jquery/jquery.min.js')}}"></script>
+              <script src="{{asset('clinic/vendors/bootstrap/bootstrap.min.js')}}"></script>
+              <script src="{{asset('clinic/vendors/owl-carousel/js/owl.carousel.min.js')}}"></script>
+              <script src="{{asset('clinic/vendors/aos/js/aos.js')}}"></script>
+              <script src="{{asset('clinic/js/landingpage.js')}}"></script>
+            <!--FIN AGREGADO DESDE UNA PLANTILLA-->
 </body>
 
 </html>
