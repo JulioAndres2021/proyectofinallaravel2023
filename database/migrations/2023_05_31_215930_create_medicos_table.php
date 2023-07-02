@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('especialidad')->nullable();
-            $table->string('horarios')->nullable();
+            $table->string('tm1')->nullable();
+            $table->string('tm2')->nullable();
+            $table->string('tt1')->nullable();
+            $table->string('tt2')->nullable();
             $table->string('lunes')->nullable();
             $table->string('martes')->nullable();
             $table->string('miercoles')->nullable();

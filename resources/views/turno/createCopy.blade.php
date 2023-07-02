@@ -66,7 +66,80 @@
                     </div>
                   <!--FIN LISTA DESPLEGABLES CON LOS TURNOS ASIGNADOS-->
 
-                  
+                  <!--LISTA DE PACIENTES A SELECCIONAR-->
+                  <div class="card" >
+                    <div class="card-header" style="background: rgb(189, 242, 209); font-weight: bold; padding: 10px; border-left:8px solid rgb(40, 194, 32); border-top-left-radius:8px; border-bottom-left-radius:8px;">
+                       Seleccione un Paciente
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="">
+                                <input type="text" class="mr-3" name="buscarpaciente"  id="buscarpaciente">
+                            {{-- <button class="btn btn-primary " type="submit">Buscar Paciente</button> --}}
+                            </div>
+                            
+                            <!--TABLA DE PACIENTES-->
+                            <div class="col-12">
+                                <div class="table-responsive">
+                                  <table class="tablapacientes table table-hover" id="tablapaciente" >
+                                    <thead>
+                                      <tr id="datospaciente">
+                                        <th scope="col">#</th>
+                                        <th scope="col">(Hacer click en el nombre para agregar)</th>
+                                        {{-- <th scope="col">Apellido</th> --}}
+                                        {{-- <th scope="col">DNI</th> --}}
+                                        {{-- <th scope="col">Dirección</th>
+                                        <th scope="col">Localidad</th>
+                                        <th scope="col">Provincia</th> --}}
+                                        <th scope="col">Teléfono</th>
+                                        <th scope="col">E-mail</th>
+                                        <th scope="col">Obra Social</th>
+                                        <th scope="col">Ocupación</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="tbodypacientes">
+                                      <!--VERIFICAMOS SI HAY RESULTADO, SI NO MOSTRAMOS MENSAJE-->
+                                      @if(count($pacientes)<=0)
+                                      <tr>
+                                          <td coldspan="6" class="text-danger">NO HAY RESULTADO CON ESA BUSQUEDA</td>
+                                      </tr>    
+                                  @else
+                                        @foreach ($pacientes as $paciente)
+                                        <tr id="datosdeltr">
+                                            <td>{{$paciente->id}}</td>
+                                            <td class="cursor-pointer" onclick="AgregaNombreyApellido(this)">{{$paciente->nombre}} {{$paciente->apellido}} </td>
+                                            {{-- <td>{{$paciente->apellido}}</td> --}}
+                                            {{-- <td>{{$paciente->dni}}</td> --}}
+                                            {{-- <td>{{$paciente->direccion}}</td>
+                                            <td>{{$paciente->localidad}}</td>
+                                            <td>{{$paciente->provincia}}</td> --}}
+                                            <td >{{$paciente->telefono}}</td>
+                                            <td >{{$paciente->mail}}</td>
+                                            <td >{{$paciente->obrasocial}}</td>
+                                            <td >{{$paciente->ocupacion}}</td>
+                                            
+                                        </tr>
+                                    @endforeach 
+                                  @endif           
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                              {!! $pacientes->links() !!}
+                             
+                            <!--FIN TABLA PACIENTES-->
+                            <!--CAJA contenedora NOMBRE Y APELLIDO-->
+                            <div class="col-12 p-3 mb-5 text-center mb-3" style="background: lightblue; font-weight: bold; padding: 25px; border-left:8px solid blue; border-top-left-radius:8px; border-bottom-left-radius:8px;">
+                                <p class="text-center" >
+                                Paciente Seleccionado:
+                                <h4><span name="nombre" id="resultadodesdetabla"></span></h4>
+                                </p>
+                            </div>
+                               
+                            <!--FIN CAJA contenedora-->
+
+                               
+                  <!--FIN LISTA DE PACIENTES A SELECCIONAR-->
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                           <li class="nav-item">
@@ -101,28 +174,28 @@
                                             <td>
                                               <div class="col text-center mt-2 mb-2">
                                                 <input type="text" name="t800" id="t800" value="">
-                                                {{-- <button class="btn btn-info" id="agregar800" onclick="agregaTextot800();"><i class="botonesTabla bi bi-plus-square"></i></button> --}}
+                                                <button class="btn btn-info" id="agregar800" onclick="agregaTextot800();"><i class="botonesTabla bi bi-plus-square"></i></button>
                                                 <button class="btn btn-danger" id="borrar800" onclick="borrartextot800();"><i class="botonesTabla bi bi-trash"></i></button>
                                               </div>
                                             </td>
                                             <td>
                                               <div class="col text-center mt-2 mb-2">
                                                 <input type="text" name="t815" id="t815" value="">
-                                                {{-- <button class="btn btn-info" id="agregar815" onclick="agregaTextot815();"><i class="botonesTabla bi bi-plus-square"></i></button> --}}
+                                                <button class="btn btn-info" id="agregar815" onclick="agregaTextot815();"><i class="botonesTabla bi bi-plus-square"></i></button>
                                                 <button class="btn btn-danger" id="borrar815" onclick="borrartextot815();"><i class="botonesTabla bi bi-trash"></i></button>
                                               </div>
                                             </td>
                                             <td>
                                               <div class="col text-center mt-2 mb-2">
                                                 <input type="text" name="t830" id="t830" value="">
-                                                {{-- <button class="btn btn-info" id="agregar830" onclick="agregaTextot830();"><i class="botonesTabla bi bi-plus-square"></i></button> --}}
+                                                <button class="btn btn-info" id="agregar830" onclick="agregaTextot830();"><i class="botonesTabla bi bi-plus-square"></i></button>
                                                 <button class="btn btn-danger" id="borrar830" onclick="borrartextot830();"><i class="botonesTabla bi bi-trash"></i></button>
                                               </div>
                                             </td>
                                             <td>
                                               <div class="col text-center mt-2 mb-2">
                                                 <input type="text" name="t845" id="t845" value="">
-                                                {{-- <button class="btn btn-info" id="agregar845" onclick="agregaTextot845();"><i class="botonesTabla bi bi-plus-square"></i></button> --}}
+                                                <button class="btn btn-info" id="agregar845" onclick="agregaTextot845();"><i class="botonesTabla bi bi-plus-square"></i></button>
                                                 <button class="btn btn-danger" id="borrar845" onclick="borrartextot845();"><i class="botonesTabla bi bi-trash"></i></button>
                                               </div>
                                             </td>
@@ -305,59 +378,11 @@
                                   </table>
                               </div>
                           </div>
-                         
                             <!--fin probando tabla-->
+                            
+                            
                           </div>
-                          NUEVA TABLA
-                          <!--PROBANDO NUEVO FORMATO PARA LOS TURNOS-->
-                          @for ($i = 8; $i <= 12; $i++)
-                          
-                                         <ul>
-                                          <li>
-                                            {{ $i}}:00 AM
-                                            <input type="text" name="t800" id="t800" value="">
-                                            <button class="btn btn-danger" id="borrar800" onclick="borrartextot800();"><i class="botonesTabla bi bi-trash"></i></button>
-                                          </li>
-                                          <li>
-                                            {{ $i}}:15 AM
-                                            <input type="text" name="t800" id="t815" value="">
-                                            <button class="btn btn-danger" id="borrar815" onclick="borrartextot815();"><i class="botonesTabla bi bi-trash"></i></button>
-                                          </li>
-                                          <li>{{ $i}}:30 AM</li>
-                                          <li>{{ $i}}:45 AM</li>
-                                         </ul>
-                                          {{-- <option value="">{{ $i}}:00 AM <option>
-                                            <option value="">{{ $i}}:30 AM <option>   --}}
-                                        @endfor
-                          <table >
-                            <thead>
-                              <tr>
-                                <th>Horario</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <div class="row">
-                                    <div class="col">
-                                      <select class="form-control">
-                                        @for ($i = 8; $i <= 13; $i++)
-                                         <ul>
-                                          <li>{{ $i}}:00 AM</li>
-                                          <li>{{ $i}}:00 AM</li>
-                                         </ul>
-                                          {{-- <option value="">{{ $i}}:00 AM <option>
-                                            <option value="">{{ $i}}:30 AM <option>   --}}
-                                        @endfor
-                                      </select>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
 
-                          <!--FIN PROBANDO NUEVO FORMATO PARA LOS TURNOS-->
                           <!--TABLA TURNO TARDE-->
                           <div id="menu1" class="container tab-pane fade"><br>
                               <!--probando tabla-->

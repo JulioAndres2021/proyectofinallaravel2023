@@ -23,18 +23,7 @@ class StoreMedicoRequest extends FormRequest
     {
         return [
             //
-                'nombre' => 'required', 'string', 'max:50',
-                'especialidad' => 'required', 'string', 'max:50',
-                'horarios' => 'required', 'string', 'max:15',
-                // 'lunes' => 'required' ,
-                // 'martes' => 'required',
-                // 'miercoles' => 'required',
-                // 'jueves' => 'required',
-                // 'viernes' => 'required',
-                // 'sabado' => 'required',
-                'atiende' => 'required', 'string', 'max:2',
-                'matricula' => 'required', 'string', 'max:50',
-                'cada' => 'required', 'string', 'max:2',
+                
     
         ];
     }

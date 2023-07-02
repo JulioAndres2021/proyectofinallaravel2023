@@ -11,6 +11,25 @@
                 </div>
 
                 <div class="card-body">
+                    @if(Session::get('exito'))
+                        <div class="alert alert-success alert-dismissible fade show mt-2 mb-2" role="alert">
+                            <strong>Información.!</strong> {{Session::get('exito')}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @endif
+                        <!--WARNING-->
+                        @if(Session::get('warning'))
+                        <div class="alert alert-danger alert-dismissible fade show mt-2 mb-2" role="alert">
+                            <strong>Información.!</strong> {{Session::get('warning')}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @endif
+                        @if(Session::get('update'))
+                        <div class="alert alert-danger alert-dismissible fade show mt-2 mb-2" role="alert">
+                            <strong>Información.!</strong> {{Session::get('update')}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        @endif
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -37,7 +56,8 @@
                   <tr>
                     <th scope="col">Nombre</th>
                     <th scope="col">Especialidad</th>
-                    <th scope="col">Horarios</th>
+                    <th scope="col">Horario Mañana</th>
+                    <th scope="col">Horario Tarde</th>
                     <th scope="col">Lunes</th>
                     <th scope="col">Martes</th>
                     <th scope="col">Miércoles</th>
@@ -58,13 +78,53 @@
                     <tr>
                         <td>{{$medico->nombre}}</td>
                         <td>{{$medico->especialidad}}</td>
-                        <td>{{$medico->horarios}}</td>
-                        <td>{{$medico->lunes}}</td>
-                        <td>{{$medico->martes}}</td>
-                        <td>{{$medico->miercoles}}</td>
-                        <td>{{$medico->jueves}}</td>
-                        <td>{{$medico->viernes}}</td>
-                        <td>{{$medico->sabado}}</td>
+                        <td>
+                            @if ($medico->tm1 == 'No Atiende' || $medico->tm2 == 'No Atiende')
+                               <span class="text-capitalize badge rounded-pill bg-danger"> no atiende</span> 
+                            @else
+                            <span class="badge rounded-pill bg-primary">{{$medico->tm1}} a {{$medico->tm2}}</span>
+                            @endif
+                                                       
+                        </td>
+                        <td>
+                            @if ($medico->tt1 == 'No Atiende' || $medico->tt2 == 'No Atiende')
+                               <span class="text-capitalize rounded-pill bg-danger"> No Atiende</span> 
+                            @else
+                            <span class="badge rounded-pill bg-primary">{{$medico->tt1}} a {{$medico->tt2}}</span>  
+                            @endif
+                                                       
+                        </td>
+                        @if ($medico->lunes == 'SI')
+                             <td class="text-success">{{$medico->lunes}}</td>
+                        @elseif ($medico->lunes == '')
+                            <td class="text-danger">NO</td>
+                        @endif
+                        @if ($medico->martes == 'SI')
+                             <td class="text-success">{{$medico->martes}}</td>
+                        @elseif ($medico->martes == '')
+                            <td class="text-danger">NO</td>
+                        @endif
+                        @if ($medico->miercoles == 'SI')
+                             <td class="text-success">{{$medico->miercoles}}</td>
+                        @elseif ($medico->miercoles == '')
+                            <td class="text-danger">NO</td>
+                        @endif
+                        @if ($medico->jueves == 'SI')
+                            <td class="text-success">{{$medico->jueves}}</td>
+                        @elseif ($medico->jueves == '')
+                        <td class="text-danger">NO</td>
+                        @endif
+                        @if ($medico->viernes == 'SI')
+                             <td class="text-success">{{$medico->viernes}}</td>
+                        @elseif ($medico->viernes == '')
+                            <td class="text-danger">NO</td>
+                        @endif
+                        @if ($medico->sabado == 'SI')
+                             <td class="text-success">{{$medico->sabado}}</td>
+                        @elseif ($medico->sabado == '')
+                            <td class="text-danger">NO</td>
+                        @endif
+                        
                         <td>
                             <a href="{{ url('medico/'.$medico->id .'/edit') }}">
                                 <button class="btn btn-warning">Editar</button>

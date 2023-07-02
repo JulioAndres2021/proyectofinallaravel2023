@@ -52,7 +52,7 @@ class TurnoController extends Controller
     public function create(Request $request)
     {
         //
-        $pacientes = DB::table('pacientes')->paginate(5);
+        $pacientes = DB::table('pacientes')->paginate(2);
         $medicos = DB::table('medicos')->get();
         $fechaseleccionada =  trim($request->get('fecha'));
         //$turnos = DB::table('turnos')->whereDate('fecha', $fechaseleccionada)->get();
@@ -114,7 +114,7 @@ class TurnoController extends Controller
 
             
         ]);
-        return redirect('/turno');
+        return redirect('turno.index');
     }
 
     /**
